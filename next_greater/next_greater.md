@@ -18,7 +18,7 @@ Given an array A, for each element at index i, find eligible indexes j such that
 ### Examples 
 Example1: 
 ```
-A  =  [1,  6,  2,  7,  8,  0]</br>
+A  =  [1,  6,  2,  7,  8,  0]
 then    at index 0, A[0] = 1. eligible js are: 1, 2, 3, 4. because A[1] > A[0], A[2] > A[0], A[3] > A[0], A[4] > A[0]. 
                                                         Since A[5] < A[0], index 5 does not qualify. 
         at index 1, A[1] = 6, eligible js are: 3, 4 
@@ -49,11 +49,10 @@ def baseForm(A):
 ``` 
 Can we do better than O(n^2)? 
 Yes. We can make it O(nlogn). Of course O(nlogn) didn’t count the time to copy indexes into the result array. 
-There are several ways to achieve this. 
-    1. Binary Search 
-    2. Merge Sort 
-    3. Binary Index Tree 
-Since the base form optimization is not the focus of this post, I will create another post for it. 
+There are several ways to achieve this. Since the base form optimization is not the focus of this post, I will create another post for it. 
+1. Binary Search 
+2. Merge Sort 
+3. Binary Index Tree 
 
 ## Variant1
 > Vanilla form + for all the eligible js of index i, find the j such that A[j] the largest one.
