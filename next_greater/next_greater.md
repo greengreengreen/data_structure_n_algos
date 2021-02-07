@@ -230,7 +230,7 @@ def v3_adv(A):
             if A[arr[m]] <= A[i]: l = m + 1
             else: r = m
         if l < len(q): res[i] = arr[l]
-        if (not q) or (A[q[-1]] < A[i]): 
+        if (not arr) or (A[arr[-1]] < A[i]): 
             arr.append(i)
     return res
 ```
