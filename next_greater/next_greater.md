@@ -6,7 +6,7 @@ It is very common to see the next greater element problems these days. In this a
 
 ## Overview
 * [Vanilla form](#vanilla-form): Given an array A, for each element at index i, find eligible indexes j such that A[i] < A[j] and i < j. 
-* [Variant1](#variant1): Vanilla form + for all the eligible js of index i, find the j such that A[j] the smallest one
+* [Variant1](#variant1): Vanilla form + for all the eligible js of index i, find the j such that A[j] the largest one
 * [Variant2](#variant2): Vanilla form + for all the eligible js of index i, find the j such that A[j] the smallest one.
 * [Variant3](#variant3): Vanilla form + for all the eligible js of index i, find the j such that j is the largest.
 * [Variant4](#variant4): Vanilla form + for all the eligible js of index i, find the j such that j is the smallest.
@@ -50,9 +50,6 @@ def baseForm(A):
 Can we do better than O(n^2)? 
 Yes. We can make it O(nlogn). Of course O(nlogn) didn’t count the time to copy indexes into the result array. 
 There are several ways to achieve this. Since the base form optimization is not the focus of this post, I will create another post for it. 
-1. Binary Search 
-2. Merge Sort 
-3. Binary Index Tree 
 
 ## Variant1
 > Vanilla form + for all the eligible js of index i, find the j such that A[j] the largest one.
@@ -91,6 +88,8 @@ def v1_brute_force(A):
 ``` 
 
 ### With technique: O(n)
+This problem is asking for the index of the largest element between [i+1, n-1] for each index i in A. Let's traverse from right to left and maintain the index of the largest element as maxidx. In this way, at index i, if A[i] > A[maxidx], it means no element in [i+1, n-1] is greater than A[i]. Hence res[i] = -1. A[i] is the largest element between [i, n-1] and maxidx should be updated to i. if A[i] <= A[maxidx], then A[maxidx] is the largest element so far. res[i] = i. 
+
 ``` python
 def v1_adv(A):
     n = len(A)
@@ -138,17 +137,45 @@ def v2_brute_force(A):
                     res[i] = j
     return res
 ```
-### With technique: O(nlogn)
+### With technique Sorting O(nlogn)
+My first intuition is to traverse A from right to left and add all the elements I have looped into a sorted array arr. To get res[i], do a binary search for arr. Since arr is increasing in values, I just need to find the smallest element greater than A[i]. After that, I will need insert A[i] into arr, which takes O(n) time. 
+
+```python
+def v2_adv_tmp(A): 
+    n = len(A)
+    res = [-1] * n 
+    arr = []
+    for i in range(n-1, -1, -1): 
+        l, r = 0, len(arr)
+        while l < r: 
+            m = l + (r-l)//2 
+            if A[arr[m]] > A[i]: r = m 
+            else: l = m+1 
+        if l < len(arr): res[i] = arr[l] 
+        arr.insert(l, i)
+    return res 
+```
+
+Can we do better? </br>
+Yes. </br>
+The most unpleasant part of the above solution is that the insert operation takes O(n) time. </br>
+Is there a way we can get rid of it? </br>
+Instead of sorting and inserting while traversing, let's sort A in one pass and store it into arr. Hence, if we traverse arr, 
+arr[i+1] is always the smallest possbile value which is greater than arr[i]. The only thing criteria to take care of is index. Remember j needs to be greater than i. </br>
+How can we satisfy the index? </br>
+By storing all the elements we have looped so far into a stack. This stack should be storing the actual index that the value locates in A. We want to make sure this stack stores 1. descreasing indexes  2. whose corresonding value in A is increasing.
+Hence, when we encounter a new (num, j) in arr, before we can append it to stack, we need to pop out all the indexes in stack which are smaller than j. The indexes we popped out from stack are the corresponding is for this current index j which we are trying to append in stack. In this way, we successfully get the i, j pairs we desire. </br>
+
 ```python 
 def v2_adv(A):
     arr = sorted([(num, i) for i, num in enumerate(A)])
     n = len(A)
     res = [-1] * n
     stack = []
-    for num, i in arr:
-        while stack and stack[-1] < i:
-            res[stack.pop()] = i
-        stack.append(i)
+    for num, j in arr:
+        while stack and stack[-1] < j:
+            res[stack.pop()] = j
+        stack.append(j)
     return res
 ```
 
@@ -186,32 +213,35 @@ def v3_brute_force(A):
                 break 
     return res 
 ```
-### With technique:  O(nlogn)
+### With technique Binary Seach O(nlogn)
+This problem asks for the rightmost j that satisfies A[j] > A[i] for each i. A[j] does not have to be the largest among all the js. To achieve this, let's again loop from the right to left. At the same time, we maintain an auxilary array arr, which stores indexes which are sorted in [A[idx], idx]. </br>
+Feels the same as v2_adv_tmp which we discussed in variant 2, right? <br>
+The only difference is that we are freed from the insert operation in this problem. If we encounter i in A, and there are already elements in arr which is greater than A[i], then there's no need for us to insert it into arr. </br>
+
 ```python
 def v3_adv(A): 
     n = len(A)
     res = [-1] * n 
-    q = []
+    arr = []
     for i in range(n-1, -1, -1): 
-        l, r = 0, len(q)
+        l, r = 0, len(arr)
         while l < r: 
             m = l + (r-l)//2
-            if A[q[m]] <= A[i]: l = m + 1
+            if A[arr[m]] <= A[i]: l = m + 1
             else: r = m
-        if l < len(q): res[i] = q[l]
+        if l < len(q): res[i] = arr[l]
         if (not q) or (A[q[-1]] < A[i]): 
-            q.append(i)
+            arr.append(i)
     return res
 ```
 ## Variant4
 >Vanilla form + for all the eligible js of index i, find the j such that j is the smallest.
 ### Problem statement: 
-Given an array A, for each element at index i, among all the eligible indexes j such that A[i] < A[j] and i < j, find the j such that A[j] is the smallest one. 
+Given an array A, for each element at index i, among all the eligible indexes j such that A[i] < A[j] and i < j, find the j such that j is the smallest index possible. 
 ### Examples: 
 Example1: 
 ```
 A       =  [1,  6,  2,  8,  7,  0]
-index:     0   1   2   3   4   5
 then at index 0, A[0] = 1, eligible js including: 1, 2, 3, 4.  
         at index 1, A[1] = 6, eligible js including: 3, 4
         at index 2, A[2] = 2, eligible js including: 3, 4
@@ -225,7 +255,7 @@ Example2:
 A = [5, 4, 1, 3, 2, 0]  => res = [-1, -1, 3, -1, -1, -1]
 ```
 
-### Brute Force: 
+### Brute Force O(n^2)
 ```python
 def v4_brute_force(A): 
     n = len(A)
@@ -237,16 +267,21 @@ def v4_brute_force(A):
                 break 
     return res 
 ```
-### With technique: 
+### With technique Monotonic Stack O(n)
+The problem asks for the index of the closest element which is greater than A[i] for each index i in A. Let's maintain a stack, which has increasing index and descreasing values. It means that the values' of indexes which the stack stores are descreasing whil indexes themselves are increasing. </br>
+Why? </br>
+If we encounter an index j, whose value A[j] is greater than any elements in stack, then we have found all the j which statisfies all the is in stack. Because we loop from left to right, all the is are smaller than j. 
+So, before we append j into stack, we pop out all the eligible is in stack which has A[i] < A[j]. This way, we get all the i, j pairs and maintains the monitonic stack. </br>
+
 ```python
 def v4_adv(A): 
     n = len(A)
     res = [-1] * n
     stack = []
-    for i in range(n): 
-        while stack and A[stack[-1]] < A[i]: 
-            res[stack.pop()] = i 
-        stack.append(i)
+    for j in range(n): 
+        while stack and A[stack[-1]] < A[j]: 
+            res[stack.pop()] = j
+        stack.append(j)
     return res
 ```
 
@@ -271,7 +306,7 @@ Example2:
 A = [5, 4, 1, 3, 2, 0]  => res = [-1, -1, 4, -1, -1, -1]
 ```
 
-### Brute Force: 
+### Brute Force O(n^2) 
 ```python
 def v5_brute_force(A): 
     n = len(A) 
@@ -283,18 +318,35 @@ def v5_brute_force(A):
             j += 1
     return res 
 ```
-### With technique
+### With technique Montonic stack O(n)
+So the any element bewtween [i+1, j] has to be greater than A[i]. A[j+1] is the first element in A[i+1:] to be smaller than A[i]. Let's focus on find the A[j+1]. Recall in variant4, we were finding the first element in A[i+1:] to be greater than A[i]. We take the prototype in variant4 and use it to find the first smaller element's index. </br>
+How should we change solutions in variant4? </br>
+In variant4, we had a stack increasing in index and descreasing in values. 
+Let's change it to maintaining a stack which is increasing in index but increasing in values. 
+How does the new stack work?
+If we encounter an index j, whose value A[j] is smaller than any elements in stack, then we have found the j which statisfies all the is in stack. Because we loop from left to right, all the is are smaller than j. 
+So, before we append j into stack, we pop out all the eligible is in stack which has A[i] > A[j]. This way, we get all the i, j pairs and maintains the monitonic stack. Note that we actually put j-1 into the res as it is A[j] > A[i].</br> 
+
 ```python
 def v5_adv(A): 
     n = len(A)
     res = [-1] * n 
     stack = [] 
-    for i in range(n): 
-        while stack and A[stack[-1]] > A[i]: 
+    for j in range(n): 
+        while stack and A[stack[-1]] > A[j]: 
             idx = stack.pop() 
-            if i - 1 > idx: 
-                res[idx] = i - 1
-        stack.append(i)
+            if j - 1 > idx: 
+                res[idx] = j - 1
+        stack.append(j)
     return res 
 ```
 
+## Conclusion 
+
+At this point, since you have seen next greater problem and its five homies, you are already very familiar with the next greater patterns. The trick is to decide where to traverse (left or right), when to sort (during traverse or before), how to sort( index inscreasing or descreasing, value increasing or descreasing), what to store (use a stack or array?). </br>
+
+In addtion, I found some problems where you can test your knowledge. They are not exactly the same problem, but hopefully you can feel how they are bonded when practicing. 
+1. Variant1: [LC 42 Trapping Water](https://leetcode.com/problems/trapping-rain-water/)
+2. Variant2: [LC 975 Odd Even Jump](https://leetcode.com/problems/odd-even-jump/)
+3. Variant3: [LC 962 Maximum Width Ramp](https://leetcode.com/problems/maximum-width-ramp/)
+4. Variant 4+5: [LC 901 Online Stock Span](https://leetcode.com/problems/online-stock-span/)
