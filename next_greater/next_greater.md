@@ -2,8 +2,8 @@
 
 > You got a new friend. well. I got homies. — Heartless by Kanye West
 
-It is very common to see the next greater element problems these days. In this article, I will go from solving the vanilla form of this problem to analyzing and illustrating some of its variants. I will talk about when to sort, how to traverse (from left or right), and when we will need an auxiliary array. 
-I post this article in [Medium](https://gxxuan.medium.com/next-greater-problem-and-its-homies-ef4e529504f9) too. But I like the git markdown format more. 
+It is very common to see the next greater element problems these days. In this article, I will go from solving the vanilla form of this problem to analyzing and illustrating some of its variants. I will talk about when to sort, how to traverse (from left or right), and when we will need an auxiliary array. </br>
+I posted this article in [Medium](https://gxxuan.medium.com/next-greater-problem-and-its-homies-ef4e529504f9) too. But I like the git markdown format more. 
 
 ## Overview
 * [Vanilla form](#vanilla-form): Given an array A, for each element at index i, find eligible indexes j such that A[i] < A[j] and i < j. 
