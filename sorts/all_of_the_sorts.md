@@ -3,6 +3,7 @@ It is not very common to be asked about basic sorts in interviews. However, I th
 
 ## Overview 
 Sorting Algorithms | Average Time Complexity | Worst-case Time Complexity | Average Space Complexity | Worst-case Time Complexity 
+---- | --- | ---- | --- | --- |
 Bubble Sort | O(n^2) | O(n^2) | O(1) | O(1) |
 Selection Sort | O(n^2) | O(n^2) | O(1) | O(1) | 
 Insertion Sort | O(n^2) | O(n^2) | O(1) | O(1) |
