@@ -7,7 +7,7 @@ Sorting Algorithms | Average Time Complexity | Worst-case Time Complexity | Aver
 Bubble Sort | O(n^2) | O(n^2) | O(1) | O(1) |
 Selection Sort | O(n^2) | O(n^2) | O(1) | O(1) | 
 Insertion Sort | O(n^2) | O(n^2) | O(1) | O(1) |
-Quick Sort | O(n^2) | O(nlog(n)) | O(1) | O(1) | 
+Quick Sort | O(nlog(n)) | O(n^2)  | O(1) | O(1) | 
 Heap Sort | O(nlog(n)) | O(nlog(n)) | O(1) | O(1) |
 Merge Sort | O(nlog(n)) | O(nlog(n)) | O(n) | O(n) |
 
