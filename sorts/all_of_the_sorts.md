@@ -12,51 +12,50 @@ Heap Sort | O(nlog(n)) | O(nlog(n)) | O(1) | O(1) |
 Merge Sort | O(nlog(n)) | O(nlog(n)) | O(n) | O(n) |
 
 ## Bubble Sort  
-The reason why it is called bubble sort is that each time we only compare two adjacent elements. If arr[i] > arr[i+1], exchange arr[i] and arr[i+1]. Every time we compare two elements, we only carry the bigger element forward so that we carry the largest element at the end of the loop. Overall, we do (n-1) rounds of compares. At the kth round, we do the bubble exchange for arr[0:n-k+1] and make sure that the kth largest element is at arr[n-k]. 
+The reason why it is called bubble sort is that each time we only compare two adjacent elements. If arr[j] < arr[j-1], exchange arr[j] and arr[j-1]. Every time we compare two elements, we only carry the bigger element forward so that we carry the largest element at the end of the loop. Overall, we do n rounds of compares. At the i th round, we do the bubble exchange for arr[0:i] and make sure that the i th largest element is at arr[n-i]. 
 
 ```python 
 def bubble_sort(arr):
     def exchange(cnt): 
-        for i in range(1, cnt): 
-            if arr[i] < arr[i-1]: 
-                arr[i], arr[i-1] = arr[i-1], arr[i]
+        for j in range(1, cnt): 
+            if arr[j] < arr[j-1]: 
+                arr[j], arr[j-1] = arr[j-1], arr[j]
     n = len(arr)
     for i in range(n, 0, -1): 
         exchange(i)
-    print(arr)
 ```
 
 ## Selection Sort  
-Selection sort does n-1 loops. At loop i, it makes sure arr[:i+1] is sorted by traversing thru arr[i+1:] and compare them each with arr[i]. This makes arr[i] the i+1 th smallest element. 
-add explainations 
+Selection sort does n-1 loops. At loop i, it makes sure arr[:i+1] is sorted by traversing thru arr[i+1:] and compare them each with arr[i]. This makes arr[i] the i+1 th smallest element in arr[i+1:]. </br>
+
+Notice that in exchange function, bubble sort does not always exchange adjacent elements. It focuses on making arr[start] the smallest element in arr[start:]. 
 
 ``` python 
 def selection_sort(arr): 
     n = len(arr)
     def exchange(start): 
-        for i in range(start+1, n): 
-            if  arr[i] < arr[start]: 
-                arr[i], arr[start] = arr[start], arr[i] 
+        for j in range(start+1, n): 
+            if  arr[j] < arr[start]: 
+                arr[j], arr[start] = arr[start], arr[j] 
     for i in range(n-1): 
         exchange(i)
-    print(arr)
 ```
 
 ## Insertion Sort  
-add explanations 
+In each loop i, both selection sort and insertion sort maintains arr[:i+1] to be sorted, yet in a different way. 
+
 
 ```python 
 def insertion_sort(arr): 
     def find_smaller(idx): 
-        for i in range(idx-1, -1, -1): 
-            if arr[i] < arr[i+1]: 
+        for j in range(idx-1, -1, -1): 
+            if arr[j] < arr[j+1]: 
                 break 
             else: 
-                arr[i], arr[i+1] = arr[i+1], arr[i]
+                arr[j], arr[j+1] = arr[j+1], arr[j]
     n = len(arr)
     for i in range(1, n): 
         find_smaller(i)
-    print(arr)
 ```
 
 ## Quick Sort 

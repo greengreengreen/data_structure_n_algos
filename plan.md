@@ -1,0 +1,6 @@
+- [ ] 2/7/21 sorting basics 
+- [ ] 2/14/21 binary search basics and applications
+- [ ] 2/21/21 two pointer with hash map/set
+- [ ] 2/28/21 brackets 
+- [ ] Maybe ? use index of an array?? 
+- [ ] Maybe ? Topological sort
