@@ -28,6 +28,7 @@ def bubble_sort(arr):
 
 ## Selection Sort  
 Selection sort does n-1 loops. At loop i, it makes sure arr[:i+1] is sorted by traversing thru arr[i+1:] and compare them each with arr[i]. This makes arr[i] the i+1 th smallest element. 
+add explainations 
 
 ``` python 
 def selection_sort(arr): 
@@ -42,7 +43,7 @@ def selection_sort(arr):
 ```
 
 ## Insertion Sort  
-
+add explanations 
 
 ```python 
 def insertion_sort(arr): 
@@ -59,7 +60,7 @@ def insertion_sort(arr):
 ```
 
 ## Quick Sort 
-
+add explanations 
 ```python 
 def quick_sort_rcur(arr): 
     def sort(idx, l, r):
@@ -108,7 +109,7 @@ def quick_sort_iter(arr):
 ```
 
 ## Heap Sort 
-
+add explanations 
 ```python 
 def heap_sort(arr): 
     def heapify(l, r):
@@ -133,7 +134,7 @@ def heap_sort(arr):
 ```
 
 ## Merge Sort 
-
+add explanations 
 
 ```python 
 def merge_sort_rcur(arr): 
@@ -173,7 +174,7 @@ def merge_sort_iter(arr):
 
 
 ## Conclusion: 
-
+add practice problems 
 
 
 ## References: 
