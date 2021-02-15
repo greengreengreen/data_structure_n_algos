@@ -85,9 +85,9 @@ def quick_sort_rcur(arr):
     partition(0, len(arr)-1)
 ``` 
 
-For iterative method, use a stack to store the newly split range. 
-Q: Why stack not queue? 
-A: Actually, either queue or stack should work. There no dependency or priority between these ranges.
+For iterative method, use a stack to store the newly split range. </br>
+Q: Why stack not queue? </br>
+A: Actually, either queue or stack should work. There no dependency or priority between these ranges.</br>
 
 ```python 
 def quick_sort_iter(arr): 
@@ -114,11 +114,11 @@ def quick_sort_iter(arr):
 ```
 
 ## Heap Sort 
-The basic idea of heap sort is to think of an array as a binary tree. For each parent node in this binary tree, it has a value which is greater than its left child and right child. Therefore, the root of this tree is the largest element in the array. This is called a max heap. 
-heapify function takes O(log(n)) time. What does it do? After we removing the max item which is the root, from the tree, we put its last element in the array in the root position temporarily. So we need to make sure this new tree is legitimate. We check the new root node and compare it with its children until it finds its right position. 
+The basic idea of heap sort is to think of an array as a binary tree. For each parent node in this binary tree, it has a value which is greater than its left child and right child. Therefore, the root of this tree is the largest element in the array. This is called a max heap. </br>
+heapify function takes O(log(n)) time. What does it do? After we removing the max item which is the root, from the tree, we put its last element in the array in the root position temporarily. So we need to make sure this new tree is legitimate. We check the new root node and compare it with its children until it finds its right position. </br>
 
-Q: Why do we put the last element in the array as the new temp root? 
-A: Think about a tree with no root node and need to get one of the other node into the root position. If we move any node other than the last node, then based on the array-tree illustration, there will be a big change in the tree and you would expect more than one node become ilegal. However, if we move the last node to the root, then only the new root node is ilegal. Just applying heapify function to the new root solves the problem. 
+Q: Why do we put the last element in the array as the new temp root? </br>
+A: Think about a tree with no root node and need to get one of the other node into the root position. If we move any node other than the last node, then based on the array-tree illustration, there will be a big change in the tree and you would expect more than one node become ilegal. However, if we move the last node to the root, then only the new root node is ilegal. Just applying heapify function to the new root solves the problem. </br>
 
 
 ```python 
