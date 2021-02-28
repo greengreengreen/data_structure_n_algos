@@ -1,4 +1,4 @@
-Binary Search Basics
+# Binary Search Basics
 
 This article is for my future self or anyone like me who would want a clear explanation on different form of binary search. 
 
@@ -218,25 +218,28 @@ Since indexes are integers, when we try to find the middle index m, we usually h
 ####  What is ceiling and floor? 
 Ceiling means: m = l + math.ceil((r-l)/2). floor means: m = l + (r-l)//2 . Imagine if the array only have two elements and currently l = 0, r = 1, then ceiling will always return m = 1 and floor will always return m = 0. 
 #### Why does ceiling/floor matter? 
-Provided that we are trying to catch the first qualified index, 
+Provided that we are trying to catch the first qualified index, </br>
 if we use ceiling, then whenever r-l is odd, m will be (r-l)/2 + 0.5. For example, when l = 0, r = 1, ceiling will always return m = 1. In this case, we will never be able to test whether or not arr[0] qualifies. And arr[0] could be the first qualified index. Therefore, if we use ceiling method to get the first qualified index, we might never be able to catch and fall into infinite loop. 
 #### How to use ceiling/floor? 
 So far, we know that when getting the first qualified index, we use floor. For last qualified index, we use ceiling. However, floor/ceiling does not come alone. It must be paired with the correct starting indexes. For example, we are getting the last qualified index and we use ceiling. Say, len(arr) = n and starting index l = 0, r = n-1. Note that, in this case we will never be able to test arr[0] because of the ceiling method. When we approach l = 0, r = 1, all we can get is m = 1 and we are stuck. </br>
 That said, 
-when getting the first qualified index, we use starting index: l = 0, r = n along with floor method. 
-when getting the last qualified index, we use starting index: l = -1, r = n-1 along with ceiling method. 
+when getting the first qualified index, we use starting index: l = 0, r = n along with floor method. </br>
+when getting the last qualified index, we use starting index: l = -1, r = n-1 along with ceiling method. </br>
 
 ### P2: when to use l = m, l = m+1, r = m, r = m-1? 
-This is a question of when l == r and break the while condition. 
-Regarding to the last loop before while condition was broken, what happened? 
-For the pair (l = m , r = m-1), 
-Obviously we are looking for the last qualified index and m = l + math.ceil((r-l)/2).
-When it is an increasing monotone, which means, 
-if arr[i] statisfis the criteria, any j such that j > i qualifies. 
-a. if the last loop makes l = m, then the last r = m. The second last l = m-1.
-b. if the last loop makes r = m-1, then the last l = m-1. The second last r = m+1 or m.  
-Similar analysis goes when there is descreasing monotone and when we need to find the first qualified index. 
-Conclusion: The while condition can be broke from either side, left or right. 
+This is a question of when l == r and break the while condition. </br>
+Regarding to the last loop before while condition was broken, what happened? </br>
+For the pair (l = m , r = m-1), </br>
+Obviously we are looking for the last qualified index and m = l + math.ceil((r-l)/2).</br>
+When it is an increasing monotone, which means, </br>
+if arr[i] statisfis the criteria, any j such that j > i qualifies. </br>
+a. if the last loop makes l = m, then the last r = m. The second last l = m-1.</br>
+b. if the last loop makes r = m-1, then the last l = m-1. The second last r = m+1 or m.  </br>
+Similar analysis goes when there is descreasing monotone and when we need to find the first qualified index. </br>
+
+**Conclusion:** The while condition can be broke from either side, left or right. </br>
+
+Overall, I hope this is helpful for my future self. 
 
 
 
