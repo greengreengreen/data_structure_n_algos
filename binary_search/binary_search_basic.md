@@ -1,6 +1,6 @@
 # Binary Search Basics
 
-This article is for my future self or anyone like me who would want a clear explanation on different form of binary search. 
+This article is for my future self or anyone like me who would want a clear explanation on different forms of binary search. 
 
 ## Basic form: 
 Given a sorted array, find the index which has value = target. 
